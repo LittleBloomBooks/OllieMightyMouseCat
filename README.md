@@ -1,3 +1,3 @@
 # LittleBloomBooks
-#Ollie, The Mighty Mouse-Cat
 
+## 1. Ollie, The Mighty Mouse-Cat
