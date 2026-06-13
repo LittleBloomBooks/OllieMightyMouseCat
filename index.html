@@ -272,35 +272,88 @@
       .btn { width: 100%; justify-content: center; }
     }
   </style>
-  <style>
-  /* Keeps the video wrapper responsive at a 16:9 aspect ratio */
-  .video-wrapper {
+<style>
+  /* Base wrapper container */
+  .video-container {
       position: relative;
       width: 100%;
       max-width: 640px;
       aspect-ratio: 16 / 9;
-      display: inline-block;
-      overflow: hidden;
+      margin-bottom: 10px;
+      background: #000;
   }
 
-  .video-wrapper iframe {
+  /* Full-window Maximized Class */
+  .video-container.maximized {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      z-index: 9999;
+  }
+
+  .video-container iframe {
       width: 100%;
       height: 100%;
       border: 0;
   }
 
-  /* The blocker dynamically scales its height relative to the player size */
+  /* The Transparent Blocker (Stops clicks on the YouTube Logo) */
   .control-blocker {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 15%; /* Uses percentage so it scales perfectly when resized */
+      height: 15%; 
       background: transparent;
       z-index: 10;
-      pointer-events: auto; /* Ensures clicks stop here and don't pass through */
+      pointer-events: auto;
   }
+
+  /* Custom Maximize/Exit Button - Sits directly over the native arrows */
+  .maximize-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 46px;      /* Perfect size to cover the standard native icon */
+      height: 13%;      /* Matches the height of the native control bar */
+      min-height: 36px;
+      max-height: 48px;
+      background: transparent; 
+      border: none;
+      cursor: pointer;
+      z-index: 20;      /* Floats above the blocker and the iframe */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  /* Custom Clean SVG Icons for the Button */
+  .maximize-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
+      opacity: 0.8;
+      transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .maximize-btn:hover svg {
+      opacity: 1;
+      transform: scale(1.1); /* Subtle pop on hover */
+  }
+
+  /* Hide/Show alternative states */
+  .video-container.maximized .max-icon { display: none; }
+  .video-container:not(.maximized) .exit-icon { display: none; }
 </style>
+<script>
+  function toggleMaximize() {
+      var container = document.getElementById('myVideoContainer');
+      container.classList.toggle('maximized');
+  }
+</script>
 </head>
 <body>
 
@@ -347,7 +400,24 @@
   </div>
 
   <!-- Audio book / YouTube card -->
-
+  <div class="video-container" id="myVideoContainer">
+    <iframe 
+        src="https://www.youtube-nocookie.com/embed/1XXJlyqvvbA?rel=0&modestbranding=1&fs=0" 
+        title="Children's Book Video">
+    </iframe>
+    
+    <div class="control-blocker"></div>
+    
+    <button class="maximize-btn" onclick="toggleMaximize()" title="Toggle Fullscreen">
+        <svg class="max-icon" viewBox="0 0 24 24">
+            <path d="M4 10h2V6h4V4H4v6zm16 4h-2v4h-4v2h6v-6zM18 4h-4v2h4v4h2V4zM6 14H4v6h6v-2H6v-4z"/>
+        </svg>
+        <svg class="exit-icon" viewBox="0 0 24 24">
+            <path d="M10 4H8v4H4v2h6V4zm4 16h2v-4h4v-2h-6v6zm2-12h-4V4h-2v6h6V8zM8 16v-2H2v2h4v4h2v-4z"/>
+        </svg>
+    </button>
+</div>
+<!--
 <div class="video-wrapper">
     <iframe 
         src="https://www.youtube-nocookie.com/embed/1XXJlyqvvbA?rel=0&modestbranding=1" 
@@ -355,6 +425,7 @@
     </iframe>
     <div class="control-blocker"></div>
 </div>
+-->
 <!--  
 <div class="video-wrapper" style="position: relative; width: 560px; height: 315px; display: inline-block;">
     <iframe 
