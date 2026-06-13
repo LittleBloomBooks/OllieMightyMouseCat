@@ -272,6 +272,35 @@
       .btn { width: 100%; justify-content: center; }
     }
   </style>
+  <style>
+  /* Keeps the video wrapper responsive at a 16:9 aspect ratio */
+  .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      aspect-ratio: 16 / 9;
+      display: inline-block;
+      overflow: hidden;
+  }
+
+  .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+  }
+
+  /* The blocker dynamically scales its height relative to the player size */
+  .control-blocker {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 15%; /* Uses percentage so it scales perfectly when resized */
+      background: transparent;
+      z-index: 10;
+      pointer-events: auto; /* Ensures clicks stop here and don't pass through */
+  }
+</style>
 </head>
 <body>
 
@@ -311,7 +340,7 @@
       <li>Animal lovers</li>
       <li>Cozy family story time</li>
       <li>Learning to believe in yourself</li>
-      <li>....test2...</li>
+      <li>....test3...</li>
     </ul>
 
     <p><span class="age-badge">Ages 3 – 7</span></p>
@@ -319,6 +348,14 @@
 
   <!-- Audio book / YouTube card -->
 
+<div class="video-wrapper">
+    <iframe 
+        src="https://www.youtube-nocookie.com/embed/1XXJlyqvvbA?rel=0&modestbranding=1" 
+        title="Children's Book Video">
+    </iframe>
+    <div class="control-blocker"></div>
+</div>
+<!--  
 <div class="video-wrapper" style="position: relative; width: 560px; height: 315px; display: inline-block;">
     <iframe 
         width="100%" 
@@ -338,7 +375,7 @@
         z-index: 10;
         pointer-events: auto;">
     </div>
-</div>
+</div>  -->
   <!-- CTAs -->
   <div class="cta-row">
     <a
